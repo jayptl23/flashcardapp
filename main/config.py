@@ -19,7 +19,7 @@ class Config():
     SECRET_KEY = os.getenv('SECRET_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # SQLALCHEMY_DATABASE_URI = "sqlite:///site.db"
-    print(type(SECRET_KEY), SECRET_KEY)
-    print(type(SQLALCHEMY_DATABASE_URI), SQLALCHEMY_DATABASE_URI)
-    print(SQLALCHEMY_DATABASE_URI == "sqlite:///site.db")
+    # For debugging
+    # print(type(SECRET_KEY), SECRET_KEY)
+    # print(type(SQLALCHEMY_DATABASE_URI), SQLALCHEMY_DATABASE_URI)
+    # print(SQLALCHEMY_DATABASE_URI == "sqlite:///site.db")
