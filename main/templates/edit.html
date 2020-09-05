@@ -1,0 +1,58 @@
+{% extends "index.html" %}
+{% block content %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="row justify-content-center">
+            <div class="alert alert-{{ category }} alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ message }}
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith%}
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="card card-form">
+              <div class="card-body">
+                <h3 class="text-center mb-3">Edit Card</h3>
+                <form novalidate method="POST">
+                  {{ form.hidden_tag() }}
+                  <div class="form-group">
+                    {% if form.front.errors %}
+                        {{ form.front(class="form-control form-control-sm is-invalid", placeholder="Card Front") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.front.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.front(class="form-control form-control-sm", placeholder="Card Front") }}
+                    {% endif %}
+                  </div>
+                  <div class="form-group">
+                     {% if form.back.errors %}
+                        {{ form.back(class="form-control form-control-sm is-invalid", placeholder="Card Back") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.back.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.back(class="form-control form-control-sm", placeholder="Card Back") }}
+                    {% endif %}
+                  </div>
+                  {{ form.submit(class="btn btn-outline-primary btn-block") }}
+                  <a href="{{ url_for('decks.deck', deck_id=deck_id) }}" class="btn btn-outline-danger btn-block">Go Back</a>
+                  {# <input
+                    type="text"
+                    value="Go Back"
+                    class="btn btn-outline-danger btn-block"
+                  /> #}
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock content %}

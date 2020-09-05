@@ -1,0 +1,4 @@
+main/.env
+venv/
+main/site.db
+**/__pycache__

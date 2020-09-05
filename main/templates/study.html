@@ -1,0 +1,61 @@
+{% extends "index.html" %}
+
+{% block content %}
+    {% if not cards %}
+        <h4 class="text-center">You have no cards to study! Why don't you add some?</h4>
+    {% else %}
+        <div id="slider" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                {# Active Card Here #}
+                <div class="carousel-item active">
+                    <div class="row justify-content-center">
+                        <div class="col d-flex justify-content-center bg-primary">
+                            <div class="card study">
+                                <div class="content">
+                                    <div class="face-front z-depth-2">
+                                        <div class="card-body">
+                                            <p>{{ cards[0].front }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="face-back z-depth-2">
+                                        <div class="card-body">
+                                            <p>{{ cards[0].back }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% for card in cards[1:] %}
+                    <div class="carousel-item">
+                        <div class="row justify-content-center">
+                            <div class="col d-flex justify-content-center bg-primary">
+                                <div class="card study">
+                                    <div class="content">
+                                        <div class="face-front z-depth-2">
+                                            <div class="card-body">
+                                                <p>{{ card.front }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="face-back z-depth-2">
+                                            <div class="card-body">
+                                                <p>{{ card.back }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <a href="#slider" class="carousel-control-prev" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a href="#slider" class="carousel-control-next" data-slide="next">
+            <span class="carousel-control-next-icon" style="color: black"></span>
+            </a>
+        </div>
+    {% endif %}
+{% endblock content %}

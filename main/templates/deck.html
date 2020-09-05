@@ -1,0 +1,64 @@
+{% extends "index.html" %}
+{% block content %}
+          <div class="row justify-content-center">
+        <h3>{{deck.title}}</h3>
+      </div>
+      <div class="row">
+        <div class="col-md-6 text-center mt-3">
+          <h4 class="text-center mb-3">Add A Card</h4>
+          <form novalidate method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+              {% if form.front.errors %}
+                {{ form.front(class="form-control form-control-sm is-invalid", placeholder="Card Front") }}
+                <div class="invalid-feedback">
+                  {% for error in form.front.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.front(class="form-control form-control-sm", placeholder="Card Front") }}
+              {% endif %}
+            </div>
+            <div class="form-group">
+              {% if form.back.errors %}
+                {{ form.back(rows="3", class="form-control form-control-sm is-invalid", placeholder="Card Back") }}
+                <div class="invalid-feedback">
+                  {% for error in form.back.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.back(rows="3", class="form-control form-control-sm", placeholder="Card Back") }}
+              {% endif %}
+            </div>
+            {{ form.submit(class="btn btn-outline-primary btn-block")}}
+          </form>
+        </div>
+        <div class="col-md-6 mt-3">
+          {% for card in deck.cards %}
+            <div class="row align-items-center justify-content-center">
+                <p>
+                    <a href="{{ url_for('cards.edit_card', deck_id=deck.id, card_id=card.id) }}">{{ card.front }}</a>
+                    <a href="{{ url_for('cards.delete_card', deck_id=deck.id, card_id=card.id) }}"><i class="fas fa-trash ml-2" style="color: red;"></i></a>
+                </p>
+            </div>
+
+          {% endfor %}
+            {# <p>
+              <a href="#">Word 1</a>
+              <a href="#"><i class="fas fa-trash ml-2"></i></a>
+            </p> #}
+          <!-- <ul class="list-unstyled" style="border: 2px solid pink">
+            <li
+              class="d-flex justify-content-center"
+              style="border: 2px solid yellow"
+            >
+              <p>Word 1</p>
+              <i class="fas fa-trash"></i>
+            </li>
+            <li>word2</li>
+          </ul> -->
+        </div>
+      </div>
+{% endblock content %}

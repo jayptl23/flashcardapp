@@ -1,0 +1,80 @@
+{% extends 'index.html' %}
+{% block content %}
+        <div class="row">
+        <div class="col-1-sm col-md-3 text-center mt-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Add Deck</h4>
+                </div>
+                <div class="card-footer">
+                    <!-- Modal Trigger -->
+                    <i class="fas fa-plus-square fa-2x" style="cursor: pointer;" data-toggle="modal" data-target="#deckModal"></i>
+                    
+                    <!-- Add Deck Modal -->
+                    <div class="modal" id="deckModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Create A New Deck</h5>
+                                    <button class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form novalidate method="POST" id="addForm">
+                                        {{ form.hidden_tag() }}
+                                        <div class="form-group">
+                                            {% if form.title.errors %}
+                                                {{ form.title(class="form-control is-invalid", placeholder="Deck Title") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.title.errors %}
+                                                        <span>{{ error }} </span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                                {{ form.title(class="form-control", placeholder="Deck Title") }}
+                                            {% endif %}
+                                        </div>
+                                        {# {{ form.submit(class="btn btn-success") }} #}
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    {{ form.submit(class="btn btn-success", form="addForm") }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {% for deck in current_user.decks %}
+            <div class="col-1-sm col-md-3 text-center mt-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title"><a href="{{url_for('decks.deck', deck_id=deck.id)}}">{{ deck.title }}</a></h4>
+                        <p class="card-text">Cards: {{ Card.query.filter_by(deck_id=deck.id).count() }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{{ url_for('decks.study_deck', deck_id=deck.id) }}" style="color: green;"><i class="fas fa-book-reader fa-2x mb-1"></i></a>
+                            </div>
+                            <div class="col">
+                                <a href="{{url_for('decks.delete_deck', deck_id=deck.id)}}" style="color: red;"><i class="fas fa-trash fa-2x"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+{% endblock content %}
+
+{% block scripts %}
+    {% if form.errors %}
+        <script type="text/javascript">
+            $(window).on('load', function(){
+                $('#deckModal').modal('show')
+            })
+        </script>
+    {% endif %}
+{% endblock scripts %}
